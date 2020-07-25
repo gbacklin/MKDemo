@@ -229,11 +229,15 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController: MapKitDirectionsDelegate {
     func getDirections(to destination: CLLocationCoordinate2D) {
-        let source = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation!))
-        source.name = "Source"
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
-        destination.name = "Destination"
-        
-        MKMapItem.openMaps(with: [source, destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+        if let location = currentLocation {
+            let source = MKMapItem(placemark: MKPlacemark(coordinate: location))
+            source.name = "Source"
+            let destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
+            destination.name = "Destination"
+            
+            MKMapItem.openMaps(with: [source, destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+        } else {
+            debugPrint("Current location is nil")
+        }
     }
 }
